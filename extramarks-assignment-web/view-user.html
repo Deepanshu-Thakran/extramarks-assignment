@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
+        font-family: sans-serif;
+        color: white;
+      }
+      span{
+        display: flex;
+        font-style: italic;
+        align-self: center;
+      }
+      #name,#email,#mobile,#state,#gender,#skills{
+        font-weight: bold;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Responses</title>
+  </head>
+  <body>
+    <div>
+      <h1>You entered the following responses:</h1>
+      <span>Name:</span><span id="name"></span><br />
+      <span>Email:</span><span id="email"></span><br />
+      <span>Mobile:</span><span id="mobile"></span><br />
+      <span>State:</span><span id="state"></span><br />
+      <span>Gender:</span><span id="gender"></span><br />
+      <span>Skills:</span><span id="skills"></span><br />
+    </div>
+
+    <script>
+      var nameOfUser = document.getElementById("name");
+      var email = document.getElementById("email");
+      var mobile = document.getElementById("mobile");
+      var state = document.getElementById("state");
+      var gender = document.getElementById("gender");
+      var skills = document.getElementById("skills");
+
+      const url = "http://127.0.0.1:8080/latest";
+
+      async function getUserInfo(url) {
+        const response = await fetch(url, { method: "get", mode: "cors" })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            // assign values to objects
+            nameOfUser.textContent = data.name;
+            email.textContent = data.email;
+            mobile.textContent = data.mobile;
+            state.textContent = data.state;
+            gender.textContent = data.gender;
+            skills.textContent = data.skills;
+          })
+          .catch((error) => console.error(error));
+      }
+
+      getUserInfo(url);
+    </script>
+  </body>
+</html>
